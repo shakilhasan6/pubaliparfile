@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Data Display</title>
+    
+</head>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+button {
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#dataDisplay {
+    margin-top: 20px;
+}
+
+p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+</style>
+<body>
+    <input type="file" id="fileInput" />
+    <div id="dataDisplay">
+
+    <table id="dataTable">
+        <!-- Data from Excel will be inserted here -->
+    </table>
+
+
+
+        <!-- Data from Excel will be inserted here -->
+<div id="selectedValue">
+<p>CDT0:400462000000:400462999999:12,13,14,15,16,17,18,19:PUBALI VISA:1111111</p>
+<p>CDT1:409380000000:409380999999:12,13,14,15,16,17,18,19:VISA GOLD:1111111</p>
+<p>CDT2:409416000000:409416999999:12,13,14,15,16,17,18,19:VISA CLASSIC:1111111</p>
+<p>CDT3:44778005000000:44778005999999:12,13,14,15,16,17,18,19:VISA CORPORATE:1111111</p>
+<p>CDT4:409384000000:409384999999:12,13,14,15,16,17,18,19:VISA CLASSIC DEBIT:1111111</p>
+<p>CDT5:44778007000000:44778007999999:12,13,14,15,16,17,18,19:VISA CLASSIC DEBIT:1111111</p>
+<p>CDT6:400000000000:499999999999:12,13,14,15,16,17,18,19:VISA:1111111</p>
+<p>CDT7:539949000000:539949999999:12,13,14,15,16,17,18,19:MC CLASSIC DEBIT:1111111</p>
+<p>CDT8:54067015000000:54067015999999:12,13,14,15,16,17,18,19:MC CORPORATE:1111111</p>
+<p>CDT9:500000000000:599999999999:12,13,14,15,16,17,18,19:MASTERCARD:1111111</p>
+<p>CDT10:222100000000:272099999999:12,13,14,15,16,17,18,19:MASTERCARD:1111111</p>
+<p>CDT11:100000000000:199999999999:12,13,14,15,16,17,18,19:NPSB:1111111</p>
+<p>CDT12:600000000000:699999999999:12,13,14,15,16,17,18,19:MASTERCARD:1111111</p>
+<p>CDT13:639996000000:639996809999:12,13,14,15,16,17,18,19:TAKAPAY:1111111</p>
+<p>EDT0:A0000000031010:VSDC:0010000000:D84004F800:D84000A800:000000:500001:99999999</p>
+<p>EDT1:A0000000032010:VISA ELECT:0010000000:D84004F800:D84000A800:000000:500001:99999999</p>
+<p>EDT2:A0000000033010:VISA INTERLINK:0010000000:D84004F800:D84000A800:000000:500001:99999999</p>
+<p>EDT3:A0000000041010:MASTERCARD:0000000000:F45084800C:F45084800C:000000:500000:99999999</p>
+<p>EDT4:A0000000043060:MAESTRO:0000000000:F45084800C:F45084800C:000000:500000:99999999</p>
+<p>EDT5:A00000033301:UPI:0010000000:D800FC9800:084000A800:000000:500000:99999999</p>
+<p>EDT6:A00000091010:TAKAPAY:0000000000:F45084800C:F45084800C:000000:500001:99999999</p>
+<p>HDT:<span id="value1"></span>:<span id="value2"></span>:1:1:1:000<span id="nii"></span>:050:050:TK:115:90:60000<span id="nii2"></span>0000</p>
+<p>TCT:<span id="add-1"></span>:<span id="add-2"></span>:<span id="add-3"></span>:<span id="add-4"></span>:<span id="add-5"></span>:<span id="dba-1"></span>:<span id="dba-2"></span>:6925:0000:0000:0000:0000:72752692</p>
+<p>MRT:SALE:CASH WITHDRAWL:VOID:EMI SALE+:BATCH REPORT+:BATCH SETTLE:LOGON:ADMIN+</p>
+<p>TXN:SALE=1:VOID=1:QRSALE=0:CASH=0:EMI=1:PREAUTH=0:ADJUST=0:SETTLEMENT=1:BALANCE=0:REFUND=0:SHOWTXN=0:LOGON=1:SALECOMPON=0:SALECOMPOFF=0:OFFLINE=0:TIPWITHSALE=0:REPORT=1</p>
+<p>PMTTYP:CHIP=1:NFC=1:CASHNFC=0:MAG=1:MANUAL=0:FALLBACK=0:LAST4DIGIT=0:CVV2INPUT=0</p>
+<p>LIMIT:999:999:100:99999999:50000:2000000:500000:3,6,9,12,18,24</p>
+<p>SLIPPRINT:CUSTOMERCOPY=1:LOGON=1:CARDDETAILSREPORT=0:SETTLEDETAILSREPORT=0:ERRORTXN=1</p>
+<p>EXPMASKING:EXPMASKMC=0:EXPMASKCC=0:EXPMASKDT=0:EXPMASKPREAUTH=0:EXPMASKDISP=0:EXPMASKSHOWTXN=0:EXPMASKEMI=0:EXPMASKERRRP=0</p>
+<p>PANMASKING:PANMASKMC=1:PANMASKCC=0:PANMASKDT=1:PANMASKPREAUTH=2:PANMASKDISP=1:PANMASKSHOWTXN=2:PANMASKEMI=1:PANMASKERRRP=1</p>
+<p>EMIBIN:5406701500000000,5406701599999999,16:4477800500000000,4477800599999999,16:4094160000000000,4094169999999999,16:4093800000000000,4093809999999999,16:4004620000000000,4004629999999999,16</p>
+<p>CASHBIN:5406701500000000,5406701599999999,16:4477800500000000,4477800599999999,16:4094160000000000,4094169999999999,16:4093800000000000,4093809999999999,16:4004620000000000,4004629999999999,16:4093840000000000,4093849999999999,16:5399490000000000,5399499999999999,16:4477800700000000,4477800799999999,16</p>
+<P>SIMBIN:BANGLALINK=<span id="bl"></span>:GRAMEENPHONE=<span id="gp"></span>:ROBI=<span id="robi"></span>:OTHERS=0</P>
+<P>IPBIN:192.168.224.69:172.31.1.43:10.230.27.5:172.31.1.43:5300:5200:5300:5200</P>
+<p>SUPPORTBIN:OFFICERNAME=<span id="officer"></span>:OFFICERMOBILE=<span id="officernumber"></span>:ENGNAME=MR.SUSANTA:ENGMOBILE=01618180562</p>	
+</div>
+<button id="saveButton">create per-file</button>
+        <!-- Add more fields as needed -->
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script>
+	
+	document.getElementById('fileInput').addEventListener('change', handleFile, false);
+
+let excelData = [];
+
+function handleFile(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+        displayData(excelData);
+       
+    };
+
+    reader.readAsArrayBuffer(file);
+}
+
+function displayData(data) {
+    const table = document.getElementById('dataTable');
+    table.innerHTML = ''; // Clear any existing content
+
+    // Create table header
+    if (data.length > 0) {
+        const headerRow = document.createElement('tr');
+		
+        data[0].forEach(header => {
+            const th = document.createElement('th');
+            th.textContent = header;
+            headerRow.appendChild(th);
+        });
+        const actionTh = document.createElement('th');
+        actionTh.textContent = 'Action';
+        headerRow.appendChild(actionTh);
+        table.appendChild(headerRow);
+    }
+
+    // Create table rows
+    data.slice(1).forEach((row, rowIndex) => {
+        const rowElement = document.createElement('tr');
+    
+     
+        row.forEach(cell => {
+            const cellElement = document.createElement('td');
+            cellElement.textContent = cell;
+            rowElement.appendChild(cellElement);
+        });
+
+        const actionTd = document.createElement('td');
+        const addButton = document.createElement('button');
+        addButton.textContent = 'Add';
+        addButton.addEventListener('click', () =>setData(rowIndex + 1)); // Pass the correct row index
+        addButton.onclick=function (){
+            rowElement.style.backgroundColor="red";
+            saveValueToFile();
+            
+        }
+        actionTd.appendChild(addButton);
+        rowElement.appendChild(actionTd);
+        
+        table.appendChild(rowElement);
+    });
+}
+
+function setData(rowIndex) {
+    if (rowIndex < 1 || rowIndex >= excelData.length) {
+        alert('Invalid data row');
+        return;
+    }
+
+
+    //testing code strat
+    // dba name and address character 28 and dba 21 character split 
+    const dba=excelData[rowIndex][2];
+    const text=excelData[rowIndex][3];
+    
+    
+     // Function to split text by word into max 28 characters
+  function splitMeaningfully(str, maxLen) {
+    const words = str.replace(/\t/g, ' ').split(' ');
+    const lines = [];
+    let currentLine = '';
+ 
+    words.forEach(word => {
+      if ((currentLine + ' ' + word).trim().length <= maxLen) {
+        currentLine += (currentLine ? ' ' : '') + word;
+      } else {
+        lines.push(currentLine);
+        currentLine = word;
+      }
+    });
+
+    if (currentLine) lines.push(currentLine);
+    return lines;
+  }
+
+ // Split into 28-character chunks
+ const result = splitMeaningfully(text, 28);
+ const dbname = splitMeaningfully(dba, 21);
+
+// Inject into address elements by ID
+result.forEach((line, index) => {
+  const element = document.getElementById(`add-${index + 1}`);
+  if (element) {
+    element.textContent = line;
+  }
+});
+// Inject into DBA Name elements by ID
+dbname.forEach((line, index) => {
+  const element = document.getElementById(`dba-${index + 1}`);
+  if (element) {
+    element.textContent = line;
+  }
+});
+    
+    // testing code end
+
+
+
+    // Example: setting the first and second cell of the specified row into HTML elements
+    document.getElementById('value1').textContent = excelData[rowIndex][0] || '';   
+    document.getElementById('value2').textContent = excelData[rowIndex][1] || '';
+	document.getElementById('officernumber').textContent = excelData[rowIndex][5] || '';
+	let gp=document.getElementById('gp').textContent = excelData[rowIndex][6] || '';
+    let robi=document.getElementById('robi').textContent = excelData[rowIndex][6] || '';
+    let bl=document.getElementById('bl').textContent = excelData[rowIndex][6] || '';
+    if (gp==='gp' || gp==='GP') {
+       document.getElementById('gp').textContent =1;
+       document.getElementById('nii').textContent=1;
+       document.getElementById('nii2').textContent=1;
+      
+    }else {
+        document.getElementById('gp').textContent =0;
+       
+    }
+    if (robi==='robi' || robi==='RB' || robi==='ROBI' || robi==='Robi') {
+    document.getElementById('robi').textContent =1;
+    document.getElementById('nii').textContent=3;
+    document.getElementById('nii2').textContent=3;
+      
+    }else {
+        document.getElementById('robi').textContent =0;
+       
+    }
+    if (bl==='BANGLALINK' || bl==='banglalink' || robi==='BL') {
+      document.getElementById('bl').textContent =1;
+      document.getElementById('nii').textContent=2;
+      document.getElementById('nii2').textContent=2;
+    }else {
+        document.getElementById('bl').textContent =0;
+       
+    }
+	document.getElementById('hostprot').textContent = excelData[rowIndex][12] || '';
+	
+	// Highlight the row by adding background color
+    const rowElement = document.getElementById('dataTable').rows[rowIndex]; // Get the row element
+    rowElement.style.backgroundColor = 'lightblue'; // Set background color
+    // Add more data assignments as needed
+}
+
+	
+	document.getElementById('saveButton').addEventListener('click', saveValueToFile);
+
+ function saveValueToFile() {
+    const selectedValue = document.getElementById('selectedValue').textContent;
+
+	
+    if (!selectedValue) {
+        alert('No value selected');
+        return;
+    }
+	
+    let indices = [1660, 1661, 1662, 1663, 1664, 1665, 1666, 1667];
+	let substring = indices.map(index => selectedValue.charAt(index+2)).join('');
+	
+	const fileName =substring + '.txt';
+   
+
+	
+    const blob = new Blob([selectedValue], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+	
+	
+    document.body.appendChild(a);
+    a.click();
+
+    setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }, 0);
+}
+
+
+
+
+	
+	</script>
+</body>
+</html>
