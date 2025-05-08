@@ -99,173 +99,122 @@ p {
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-    <script>
-	
-	document.getElementById('fileInput').addEventListener('change', handleFile, false);
-
-let excelData = [];
-
-function handleFile(event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = function(e) {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-        excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-        displayData(excelData);
-       
-    };
-
-    reader.readAsArrayBuffer(file);
-}
-
-function displayData(data) {
-    const table = document.getElementById('dataTable');
-    table.innerHTML = ''; // Clear any existing content
-
-    // Create table header
-    if (data.length > 0) {
-        const headerRow = document.createElement('tr');
-		
-        data[0].forEach(header => {
-            const th = document.createElement('th');
-            th.textContent = header;
-            headerRow.appendChild(th);
-        });
-        const actionTh = document.createElement('th');
-        actionTh.textContent = 'Action';
-        headerRow.appendChild(actionTh);
-        table.appendChild(headerRow);
-    }
-
-    // Create table rows
-    data.slice(1).forEach((row, rowIndex) => {
-        const rowElement = document.createElement('tr');
-    
-     
-        row.forEach(cell => {
-            const cellElement = document.createElement('td');
-            cellElement.textContent = cell;
-            rowElement.appendChild(cellElement);
-        });
-
-        const actionTd = document.createElement('td');
-        const addButton = document.createElement('button');
-        addButton.textContent = 'Add';
-        addButton.addEventListener('click', () =>setData(rowIndex + 1)); // Pass the correct row index
-        addButton.onclick=function (){
-            rowElement.style.backgroundColor="red";
-            saveValueToFile();
-            
-        }
-        actionTd.appendChild(addButton);
-        rowElement.appendChild(actionTd);
-        
-        table.appendChild(rowElement);
-    });
-}
-
-function setData(rowIndex) {
-    if (rowIndex < 1 || rowIndex >= excelData.length) {
-        alert('Invalid data row');
-        return;
-    }
+<script>
 
 
-    //testing code strat
-    // dba name and address character 28 and dba 21 character split 
-    const dba=excelData[rowIndex][2];
-    const text=excelData[rowIndex][3];
-    
-    
-     // Function to split text by word into max 28 characters
-  function splitMeaningfully(str, maxLen) {
-    const words = str.replace(/\t/g, ' ').split(' ');
-    const lines = [];
-    let currentLine = '';
- 
-    words.forEach(word => {
-      if ((currentLine + ' ' + word).trim().length <= maxLen) {
-        currentLine += (currentLine ? ' ' : '') + word;
-      } else {
-        lines.push(currentLine);
-        currentLine = word;
-      }
+const excelData = [];
+
+document.getElementById('fileInput').addEventListener('change', function(event) {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    const data = new Uint8Array(e.target.result);
+    const workbook = XLSX.read(data, { type: 'array' });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+    excelData.push(...jsonData);
+    renderTable(jsonData);
+  };
+  reader.readAsArrayBuffer(file);
+});
+
+function renderTable(data) {
+  const table = document.getElementById('dataTable');
+  table.innerHTML = '';
+
+  const headerRow = document.createElement('tr');
+  data[0].forEach(header => {
+    const th = document.createElement('th');
+    th.textContent = header;
+    headerRow.appendChild(th);
+  });
+
+  const th = document.createElement('th');
+  th.textContent = 'Action';
+  headerRow.appendChild(th);
+  table.appendChild(headerRow);
+
+  data.slice(1).forEach((row, i) => {
+    const tr = document.createElement('tr');
+
+    row.forEach(cell => {
+      const td = document.createElement('td');
+      td.textContent = cell;
+      tr.appendChild(td);
     });
 
-    if (currentLine) lines.push(currentLine);
-    return lines;
-  }
-
- // Split into 28-character chunks
- const result = splitMeaningfully(text, 28);
- const dbname = splitMeaningfully(dba, 21);
-
-// Inject into address elements by ID
-result.forEach((line, index) => {
-  const element = document.getElementById(`add-${index + 1}`);
-  if (element) {
-    element.textContent = line;
-  }
-});
-// Inject into DBA Name elements by ID
-dbname.forEach((line, index) => {
-  const element = document.getElementById(`dba-${index + 1}`);
-  if (element) {
-    element.textContent = line;
-  }
-});
-    
-    // testing code end
-
-
-
-    // Example: setting the first and second cell of the specified row into HTML elements
-    document.getElementById('value1').textContent = excelData[rowIndex][0] || '';   
-    document.getElementById('value2').textContent = excelData[rowIndex][1] || '';
-	document.getElementById('officernumber').textContent = excelData[rowIndex][5] || '';
-	let gp=document.getElementById('gp').textContent = excelData[rowIndex][6] || '';
-    let robi=document.getElementById('robi').textContent = excelData[rowIndex][6] || '';
-    let bl=document.getElementById('bl').textContent = excelData[rowIndex][6] || '';
-    if (gp==='gp' || gp==='GP') {
-       document.getElementById('gp').textContent =1;
-       document.getElementById('nii').textContent=1;
-       document.getElementById('nii2').textContent=1;
-      
-    }else {
-        document.getElementById('gp').textContent =0;
-       
-    }
-    if (robi==='robi' || robi==='RB' || robi==='ROBI' || robi==='Robi') {
-    document.getElementById('robi').textContent =1;
-    document.getElementById('nii').textContent=3;
-    document.getElementById('nii2').textContent=3;
-      
-    }else {
-        document.getElementById('robi').textContent =0;
-       
-    }
-    if (bl==='BANGLALINK' || bl==='banglalink' || robi==='BL') {
-      document.getElementById('bl').textContent =1;
-      document.getElementById('nii').textContent=2;
-      document.getElementById('nii2').textContent=2;
-    }else {
-        document.getElementById('bl').textContent =0;
-       
-    }
-	document.getElementById('hostprot').textContent = excelData[rowIndex][12] || '';
-	
-	// Highlight the row by adding background color
-    const rowElement = document.getElementById('dataTable').rows[rowIndex]; // Get the row element
-    rowElement.style.backgroundColor = 'lightblue'; // Set background color
-    // Add more data assignments as needed
+    const actionTd = document.createElement('td');
+    const btn = document.createElement('button');
+    btn.textContent = 'Add';
+    btn.addEventListener('click', () => {
+      fillData(i + 1);
+      tr.style.backgroundColor = 'lightblue';
+      saveValueToFile();
+    });
+    actionTd.appendChild(btn);
+    tr.appendChild(actionTd);
+    table.appendChild(tr);
+  });
 }
 
-	
+function splitMeaningfully(text, maxLen) {
+  const words = text.replace(/\t/g, ' ').split(' ');
+  const result = [];
+  let line = '';
+
+  for (const word of words) {
+    if ((line + ' ' + word).trim().length <= maxLen) {
+      line += (line ? ' ' : '') + word;
+    } else {
+      result.push(line);
+      line = word;
+    }
+  }
+  if (line) result.push(line);
+  return result;
+}
+
+
+
+function fillData(index) {
+// old data clear
+const spanIds = ['value1', 'value2', 'officer', 'officernumber', 'gp', 'robi', 'bl'];
+for (let i = 1; i <= 5; i++) spanIds.push(`add-${i}`);
+for (let i = 1; i <= 2; i++) spanIds.push(`dba-${i}`);
+spanIds.forEach(id => {
+const el = document.getElementById(id);
+if (el) el.textContent = '';
+});
+
+// new data set
+const row = excelData[index];
+if (!row) return;
+
+document.getElementById('value1').textContent = row[0] || '';
+document.getElementById('value2').textContent = row[1] || '';
+document.getElementById('officer').textContent = row[4] || '';
+document.getElementById('officernumber').textContent = row[5] || '';
+
+const addressLines = splitMeaningfully(row[3] || '', 28);
+addressLines.forEach((line, i) => {
+const el = document.getElementById(`add-${i + 1}`);
+if (el) el.textContent = line;
+});
+
+const dbaLines = splitMeaningfully(row[2] || '', 21);
+dbaLines.forEach((line, i) => {
+const el = document.getElementById(`dba-${i + 1}`);
+if (el) el.textContent = line;
+});
+
+const sim = (row[6] || '').toLowerCase();
+document.getElementById('gp').textContent = sim === 'gp' ? '1' : '0';
+document.getElementById('robi').textContent = ['robi', 'rb'].includes(sim) ? '1' : '0';
+document.getElementById('bl').textContent = sim === 'banglalink' || sim === 'bl' ? '1' : '0';
+}
+
 	document.getElementById('saveButton').addEventListener('click', saveValueToFile);
 
  function saveValueToFile() {
@@ -305,6 +254,6 @@ dbname.forEach((line, index) => {
 
 
 	
-	</script>
+</script>
 </body>
 </html>
